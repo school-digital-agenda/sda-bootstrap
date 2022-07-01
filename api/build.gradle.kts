@@ -11,7 +11,7 @@ group = "br.com.sda.bootstrap.api"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
-val springCloudVersion = "2021.0.1"
+val springCloudVersion = "2021.0.3"
 
 repositories {
     mavenCentral()
