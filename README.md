@@ -20,12 +20,33 @@
 | RabbitMQ   | 3.8.14 | 5672<br/>15672 | **user/pass:** admin/root           |
 | Wiremock   | 2.32.0 | 8082           |                                     |
 
+## Estrutura do projeto
+
+Este projeto apresenta uma aplicação Bootstrap consumindo serviços externos,
+mockados por uma aplicação em wiremock.
+
+![C4L1][6]
+
+Sendo um projeto multi-módulos que contempla duas aplicações de um mesmo 
+contexto. Os módulos são:
+ - **api**: aplicação que fornece os rescursos *rest*. 
+ - **messaging**: aplicação para processamento assíncrono do domínio.
+ 
+![C4L2][7]
+
+Cada módulo tem seus pacotes representando a estrutura da arquitetura hexagonal:  
+
+![Arquitetura Hexagonal][5]
+
 ## Configurando o ambiente
+
 Após baixar o repositório, você pode configurar o ambiente utilizando o SDKMan!,
 caso não tenha instalado basta seguir as instruções em [SDKMan Installation][1].
+
 ``` bash
 $ sdk env install
 ```
+
 > **Dica:** você também pode habilitar o `sdkman_auto_env=true` editando as configurações
 > pelo comando `sdk config`. Isso fará com que o ambiente seja configurado automaticamente
 > ao entrar em uma pasta que contenha o arquivo `.sdkmanrc`.
@@ -74,6 +95,6 @@ pelo comando anterior:
 [2]: https://sdkman.io/usage
 [3]: ./config/assets/images/pg-ipaddress.png
 [4]: ./config/assets/images/pgadmin-config.png
-
-
-
+[5]: ./config/assets/images/hexagonal-arch.png
+[6]: ./config/assets/images/SDABootstrap-C4L1.png
+[7]: ./config/assets/images/SDABoostrap-C4L2.png
