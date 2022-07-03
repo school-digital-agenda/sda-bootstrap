@@ -12,6 +12,10 @@ version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 val springCloudVersion = "2021.0.3"
+val datetimeVersion = "0.4.0"
+val coroutinesVersion = "1.6.3"
+val uuidVersion = "0.0.15"
+val serializationCoreVersion = "1.3.3"
 
 repositories {
     mavenCentral()
@@ -20,14 +24,19 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     implementation("org.springframework.boot:spring-boot-starter")
-//    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationCoreVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:$datetimeVersion")
+    implementation("app.softwork:kotlinx-uuid-core:$uuidVersion")
 
 //    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
-//    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
 //    implementation("org.springframework.cloud:spring-cloud-bus")
 //    runtimeOnly("org.postgresql:postgresql")
 //    runtimeOnly("org.postgresql:r2dbc-postgresql")
