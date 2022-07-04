@@ -5,12 +5,15 @@ import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Course
 import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Stage
 import br.com.sda.bootstrap.sdabootstrap.api.core.port.out.CoursesFinder
 import br.com.sda.bootstrap.sdabootstrap.api.mock.core.domain.buildCourseMock
+import br.com.sda.bootstrap.sdabootstrap.api.mock.core.domain.generateCourse
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import org.junit.jupiter.api.Test
 import reactor.core.publisher.Flux
 import reactor.test.StepVerifier
+import kotlin.random.Random
+
 
 internal class FetchCoursesForSelectedStagesUseCaseTest: UnitTest() {
 
@@ -21,14 +24,28 @@ internal class FetchCoursesForSelectedStagesUseCaseTest: UnitTest() {
     private lateinit var fetchCoursesForSelectedStagesUseCase: FetchCoursesForSelectedStagesUseCase
 
     @Test
-    fun `Should return courses fetched for corresponding stages`() {
+    fun `Should return only one course that matches for corresponding stage`() {
         val stages = listOf(Stage.BERCARIO)
+        val expected = Course.buildCourseMock()
 
         every { coursesFinder.findCoursesByStage(stages) }
-            .returns(Flux.just(Course.buildCourseMock()))
+            .returns(Flux.just(expected))
 
         StepVerifier.create(fetchCoursesForSelectedStagesUseCase.fetchCoursesByStage(stages))
-            .expectNextCount(1)
+            .expectNext(expected)
+            .verifyComplete()
+    }
+
+    @Test
+    fun `Should return courses fetched for corresponding stages`() {
+        val stages = listOf(Stage.BERCARIO)
+        val expectedQuantity = Random.nextLong(until = 100)
+
+        every { coursesFinder.findCoursesByStage(stages) }
+            .returns(Course.generateCourse().take(expectedQuantity))
+
+        StepVerifier.create(fetchCoursesForSelectedStagesUseCase.fetchCoursesByStage(stages))
+            .expectNextCount(expectedQuantity)
             .verifyComplete()
     }
 }

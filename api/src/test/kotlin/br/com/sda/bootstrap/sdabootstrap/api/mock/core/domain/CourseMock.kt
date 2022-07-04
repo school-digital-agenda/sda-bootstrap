@@ -5,6 +5,8 @@ import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Stage
 import com.appmattus.kotlinfixture.config.regexToRandom
 import com.appmattus.kotlinfixture.kotlinFixture
 import io.github.serpro69.kfaker.faker
+import reactor.core.publisher.Flux
+import reactor.core.publisher.SynchronousSink
 import java.math.BigDecimal
 
 private val faker = faker {  }
@@ -27,3 +29,10 @@ fun Course.Companion.buildCourseMock(): Course =
             factory<String> { regexToRandom(moneyRegex) }
         })
     )
+
+fun Course.Companion.generateCourse(): Flux<Course> =
+    Flux.generate { synchronousSink: SynchronousSink<Course> ->
+        synchronousSink.next(
+            Course.buildCourseMock()
+        )
+    }
