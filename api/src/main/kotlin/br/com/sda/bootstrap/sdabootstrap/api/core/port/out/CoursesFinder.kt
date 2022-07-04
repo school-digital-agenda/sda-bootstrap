@@ -4,6 +4,6 @@ import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Course
 import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Stage
 import reactor.core.publisher.Flux
 
-interface CourseFinder {
+interface CoursesFinder {
     fun findCoursesByStage(stages: List<Stage>): Flux<Course>
 }

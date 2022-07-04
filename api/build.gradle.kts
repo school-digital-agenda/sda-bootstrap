@@ -16,6 +16,9 @@ val datetimeVersion = "0.4.0"
 val coroutinesVersion = "1.6.3"
 val uuidVersion = "0.0.15"
 val serializationCoreVersion = "1.3.3"
+val springmockkVersion = "3.1.1"
+val kotlinFakerVersion = "1.11.0"
+val fixtureVersion = "1.2.0"
 
 repositories {
     mavenCentral()
@@ -43,6 +46,10 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
+    testImplementation("com.ninja-squad:springmockk:$springmockkVersion")
+    testImplementation("io.github.serpro69:kotlin-faker:$kotlinFakerVersion")
+    testImplementation("com.appmattus.fixture:fixture:$fixtureVersion")
+    testImplementation("com.appmattus.fixture:fixture-generex:$fixtureVersion")
 }
 
 dependencyManagement {

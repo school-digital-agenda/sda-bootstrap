@@ -1,6 +1,5 @@
 package br.com.sda.bootstrap.sdabootstrap.api.core.domain
 
-import kotlinx.uuid.UUID
 import java.math.BigDecimal
 
 data class Course(
@@ -9,4 +8,6 @@ data class Course(
     val description: String,
     val stage: Stage,
     val tuitionFee: BigDecimal
-)
+) {
+    companion object {}
+}
