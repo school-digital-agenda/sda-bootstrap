@@ -12,7 +12,6 @@ on:
     branches: [ "develop", "release", "main" ]
 
 permissions:
-permissions:
   contents: read
   issues: read
   checks: write
