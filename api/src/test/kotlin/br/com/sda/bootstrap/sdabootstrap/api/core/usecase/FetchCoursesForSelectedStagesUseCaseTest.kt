@@ -14,7 +14,6 @@ import reactor.core.publisher.Flux
 import reactor.test.StepVerifier
 import kotlin.random.Random
 
-
 internal class FetchCoursesForSelectedStagesUseCaseTest: UnitTest() {
 
     @MockK
