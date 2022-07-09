@@ -1,11 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    val kotlinVersion = "1.7.10"
     id("org.springframework.boot") version "2.7.1"
     id("io.spring.dependency-management") version "1.0.12.RELEASE"
-    kotlin("jvm") version "1.7.10"
-    kotlin("plugin.spring") version "1.7.10"
     id("org.flywaydb.flyway") version "8.5.11"
+    kotlin("jvm") version kotlinVersion
+    kotlin("plugin.spring") version kotlinVersion
+    kotlin("plugin.noarg") version kotlinVersion
+    kotlin("plugin.jpa") version kotlinVersion
 }
 
 group = "br.com.sda.bootstrap.api"
@@ -20,7 +23,7 @@ val serializationCoreVersion = "1.3.3"
 val springmockkVersion = "3.1.1"
 val kotlinFakerVersion = "1.11.0"
 val fixtureVersion = "1.2.0"
-
+val springDocVersion = "1.6.9"
 
 repositories {
     mavenCentral()
@@ -42,9 +45,15 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
     runtimeOnly("org.postgresql:r2dbc-postgresql")
     runtimeOnly("org.postgresql:postgresql")
+
+    implementation("org.springdoc:springdoc-openapi-webflux-ui:$springDocVersion")
+    implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
+
+    implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
 //    implementation("org.springframework.cloud:spring-cloud-bus")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.cloud:spring-cloud-starter-contract-stub-runner")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("com.ninja-squad:springmockk:$springmockkVersion")
     testImplementation("io.github.serpro69:kotlin-faker:$kotlinFakerVersion")

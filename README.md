@@ -82,7 +82,7 @@ o postgres está sendo executado, para isso digite o comando:
 ``` bash
 $ docker inspect $(docker ps -f name=sda-bootstrap_postgres -q) | grep IPAddress
 ```
-Tendo como resultado:
+Tendo como resultado algo similiar:
 
 ![resultado][3]
 
