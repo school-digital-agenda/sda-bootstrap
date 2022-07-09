@@ -4,6 +4,8 @@ import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Gender
 import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Stage
 import com.appmattus.kotlinfixture.config.regexToRandom
 import com.appmattus.kotlinfixture.kotlinFixture
+import java.time.LocalDate
+import kotlin.random.Random
 
 private val fixture = kotlinFixture()
 
@@ -33,3 +35,6 @@ fun fixtureGender(): Gender =
 
 fun fixtureStage(): Stage =
     fixture.asSequence<Stage>().iterator().next()
+
+fun fixtureBirthDate(age: Long? = null): LocalDate =
+    LocalDate.now().minusYears(age ?: Random.nextLong(2, 19))

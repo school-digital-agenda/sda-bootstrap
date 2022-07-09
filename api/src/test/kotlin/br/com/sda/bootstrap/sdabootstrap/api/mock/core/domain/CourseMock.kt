@@ -8,7 +8,7 @@ import java.math.BigDecimal
 
 private val faker = faker {  }
 
-fun Course.Companion.buildCourseMock(): Course =
+fun Course.Companion.buildMock(): Course =
     Course(
         id = fixtureUuid(),
         name = faker.rickAndMorty.locations(),
@@ -20,6 +20,6 @@ fun Course.Companion.buildCourseMock(): Course =
 fun Course.Companion.generateCourse(): Flux<Course> =
     Flux.generate { synchronousSink: SynchronousSink<Course> ->
         synchronousSink.next(
-            Course.buildCourseMock()
+            Course.buildMock()
         )
     }

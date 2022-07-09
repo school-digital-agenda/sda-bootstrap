@@ -7,16 +7,12 @@ import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Requirement
 import br.com.sda.bootstrap.sdabootstrap.api.core.exception.EnrollmentNotElegibleException
 import br.com.sda.bootstrap.sdabootstrap.api.core.port.out.CourseFetcher
 import br.com.sda.bootstrap.sdabootstrap.api.core.port.out.EnrollmentAnalyzer
-import br.com.sda.bootstrap.sdabootstrap.api.mock.core.domain.buildCourseMock
 import br.com.sda.bootstrap.sdabootstrap.api.mock.core.domain.buildMock
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.justRun
 import io.mockk.verify
-import org.assertj.core.api.Assertions
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.time.LocalDate
@@ -34,7 +30,7 @@ internal class EnrollInElegibleCourseUseCaseTest: UnitTest() {
 
     @Test
     fun `Should send requirement for analysis when course exists and requirement is elegible`() {
-        val course = Course.buildCourseMock()
+        val course = Course.buildMock()
         val requirement = Requirement.buildMock()
             .copy(
                 course = course.id,
@@ -54,7 +50,7 @@ internal class EnrollInElegibleCourseUseCaseTest: UnitTest() {
 
     @Test
     fun `Should throws EnrollmentNotElegibleException when requirement not elegible`() {
-        val course = Course.buildCourseMock()
+        val course = Course.buildMock()
         val requirement = Requirement.buildMock()
             .copy(
                 course = course.id,
