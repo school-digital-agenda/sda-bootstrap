@@ -1,4 +1,4 @@
-package br.com.sda.bootstrap.sdabootstrap.api.mock.core.domain
+package br.com.sda.bootstrap.sdabootstrap.api.mock
 
 import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Gender
 import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Stage

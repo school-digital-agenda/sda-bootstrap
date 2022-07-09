@@ -10,11 +10,11 @@ private val faker = faker {  }
 
 fun Course.Companion.buildMock(): Course =
     Course(
-        id = fixtureUuid(),
+        id = br.com.sda.bootstrap.sdabootstrap.api.mock.fixtureUuid(),
         name = faker.rickAndMorty.locations(),
         description = faker.rickAndMorty.quotes(),
-        stage = fixtureStage(),
-        tuitionFee = BigDecimal(fixtureMoney())
+        stage = br.com.sda.bootstrap.sdabootstrap.api.mock.fixtureStage(),
+        tuitionFee = BigDecimal(br.com.sda.bootstrap.sdabootstrap.api.mock.fixtureMoney())
     )
 
 fun Course.Companion.generateCourse(): Flux<Course> =
