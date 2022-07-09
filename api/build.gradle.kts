@@ -8,7 +8,6 @@ plugins {
     kotlin("plugin.spring") version kotlinVersion
     kotlin("plugin.noarg") version kotlinVersion
     kotlin("plugin.jpa") version kotlinVersion
-
 }
 
 group = "br.com.sda.bootstrap.api"
