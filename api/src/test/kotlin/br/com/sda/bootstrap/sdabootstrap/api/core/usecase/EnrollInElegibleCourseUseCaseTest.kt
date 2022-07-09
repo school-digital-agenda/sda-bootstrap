@@ -7,7 +7,6 @@ import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Requirement
 import br.com.sda.bootstrap.sdabootstrap.api.core.exception.EnrollmentNotElegibleException
 import br.com.sda.bootstrap.sdabootstrap.api.core.port.out.CourseFetcher
 import br.com.sda.bootstrap.sdabootstrap.api.core.port.out.EnrollmentAnalyzer
-import br.com.sda.bootstrap.sdabootstrap.api.mock.core.domain.buildCourseMock
 import br.com.sda.bootstrap.sdabootstrap.api.mock.core.domain.buildMock
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
