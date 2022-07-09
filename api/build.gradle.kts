@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.12.RELEASE"
     kotlin("jvm") version "1.7.10"
     kotlin("plugin.spring") version "1.7.10"
+    id("org.flywaydb.flyway") version "8.5.11"
 }
 
 group = "br.com.sda.bootstrap.api"
@@ -19,6 +20,7 @@ val serializationCoreVersion = "1.3.3"
 val springmockkVersion = "3.1.1"
 val kotlinFakerVersion = "1.11.0"
 val fixtureVersion = "1.2.0"
+
 
 repositories {
     mavenCentral()
@@ -36,11 +38,11 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationCoreVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 
-//    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+    runtimeOnly("org.postgresql:r2dbc-postgresql")
+    runtimeOnly("org.postgresql:postgresql")
 //    implementation("org.springframework.cloud:spring-cloud-bus")
-//    runtimeOnly("org.postgresql:postgresql")
-//    runtimeOnly("org.postgresql:r2dbc-postgresql")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")

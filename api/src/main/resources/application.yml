@@ -1,0 +1,21 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  jackson:
+    default-property-inclusion: non_null
+  r2dbc:
+    url: r2dbc:postgresql://postgres@localhost:5432/sda-bootstrap
+    username: admin
+    password: root
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: debug
+      springframework:
+        r2dbc: DEBUG

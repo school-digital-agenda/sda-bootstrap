@@ -1,0 +1,26 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  jackson:
+    default-property-inclusion: non_null
+  data:
+    postgres:
+      host: localhost
+      port: 5432
+      username: admin
+      password: root
+      database: sda-bootstrap
+  datasource:
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: debug
