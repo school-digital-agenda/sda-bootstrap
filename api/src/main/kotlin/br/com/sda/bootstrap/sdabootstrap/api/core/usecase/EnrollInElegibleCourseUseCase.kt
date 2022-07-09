@@ -6,9 +6,11 @@ import br.com.sda.bootstrap.sdabootstrap.api.core.exception.EnrollmentNotElegibl
 import br.com.sda.bootstrap.sdabootstrap.api.core.port.`in`.CourseEnroller
 import br.com.sda.bootstrap.sdabootstrap.api.core.port.out.CourseFetcher
 import br.com.sda.bootstrap.sdabootstrap.api.core.port.out.EnrollmentAnalyzer
+import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.Period
 
+@Service
 class EnrollInElegibleCourseUseCase(
     private val courseFetcher: CourseFetcher,
     private val enrollmentAnalyser: EnrollmentAnalyzer

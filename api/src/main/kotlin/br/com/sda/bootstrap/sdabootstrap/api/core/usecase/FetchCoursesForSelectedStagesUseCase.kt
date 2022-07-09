@@ -13,9 +13,13 @@ import java.util.logging.Level
 class FetchCoursesForSelectedStagesUseCase(
     private val coursesFinder: CoursesFinder
 ): CoursesByStageFinder {
+    companion object {
+        private const val LOGGER_CATEGORY_FETCH_COURSES_BY_STAGE = "FetchCoursesForSelectedStages.fetchCoursesByStage"
+    }
+
     override fun fetchCoursesByStage(stages: List<Stage>): Flux<Course> =
         coursesFinder.findCoursesByStage(stages)
-            .log("FetchCoursesForSelectedStages.fetchCoursesByStage", Level.FINE, SignalType.ON_NEXT)
-            .log("FetchCoursesForSelectedStages.fetchCoursesByStage", Level.INFO, SignalType.ON_COMPLETE)
-            .log("FetchCoursesForSelectedStages.fetchCoursesByStage", Level.SEVERE, SignalType.ON_ERROR)
+            .log(LOGGER_CATEGORY_FETCH_COURSES_BY_STAGE, Level.FINE, SignalType.ON_NEXT)
+            .log(LOGGER_CATEGORY_FETCH_COURSES_BY_STAGE, Level.INFO, SignalType.ON_COMPLETE)
+            .log(LOGGER_CATEGORY_FETCH_COURSES_BY_STAGE, Level.SEVERE, SignalType.ON_ERROR)
 }
