@@ -1,4 +1,3 @@
-import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -13,6 +12,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.20.0"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
     id("org.flywaydb.flyway") version "8.5.11"
+    id("jacoco")
 }
 
 group = "br.com.sda.bootstrap"
@@ -38,18 +38,5 @@ subprojects {
             freeCompilerArgs = listOf("-Xjsr305=strict")
             jvmTarget = "17"
         }
-    }
-}
-
-detekt {
-    config = files("$projectDir/config/detekt/style-config.yml")
-}
-
-tasks.withType<Detekt>().configureEach {
-    reports {
-        html.required.set(true)
-        xml.required.set(false)
-        txt.required.set(false)
-        sarif.required.set(false)
     }
 }
