@@ -5,7 +5,7 @@ import br.com.sda.bootstrap.sdabootstrap.api.mock.fixtureGender
 import br.com.sda.bootstrap.sdabootstrap.api.mock.fixtureUuid
 import io.github.serpro69.kfaker.faker
 
-private val faker = faker {  }
+private val faker = faker { }
 
 fun PostCourseEnrollRequest.Companion.buildMock(): PostCourseEnrollRequest =
     PostCourseEnrollRequest(

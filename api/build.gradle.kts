@@ -1,14 +1,15 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    val kotlinVersion = "1.7.10"
-    id("org.springframework.boot") version "2.7.1"
-    id("io.spring.dependency-management") version "1.0.12.RELEASE"
-    id("org.flywaydb.flyway") version "8.5.11"
-    kotlin("jvm") version kotlinVersion
-    kotlin("plugin.spring") version kotlinVersion
-    kotlin("plugin.noarg") version kotlinVersion
-    kotlin("plugin.jpa") version kotlinVersion
+    kotlin("jvm")
+    kotlin("plugin.spring")
+    kotlin("plugin.noarg")
+    kotlin("plugin.jpa")
+    id("io.spring.dependency-management")
+    id("org.springframework.boot")
+    id("io.gitlab.arturbosch.detekt")
+    id("org.jlleitschuh.gradle.ktlint")
+    id("jacoco")
 }
 
 group = "br.com.sda.bootstrap.api"
@@ -29,6 +30,18 @@ val r2dbcH2Version = "1.0.0.RC1"
 
 repositories {
     mavenCentral()
+}
+
+springBoot {
+    buildInfo()
+}
+
+tasks.bootJar {
+    enabled = true
+}
+
+tasks.jar {
+    enabled = false
 }
 
 dependencies {
@@ -80,4 +93,86 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    reports {
+        html.required.set(true)
+        xml.required.set(false)
+        txt.required.set(false)
+        sarif.required.set(false)
+    }
+}
+
+/************************
+ * JaCoCo Configuration *
+ ************************/
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+val exclusions = listOf(
+    "**/config/**",
+    "**/exception/**",
+    "**/port/**",
+    "**/webflux/resources/**",
+    "**/advice/**",
+    "**/springdoc/**",
+    "**/persistence/entity/**",
+    "**/persistence/repository/**"
+)
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+        csv.required.set(false)
+        html.required.set(true)
+    }
+}
+
+tasks.test {
+    configure<JacocoTaskExtension> {
+        excludes = emptyList()
+    }
+}
+
+tasks.jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = "BUNDLE"
+            limit {
+                counter = "INSTRUCTION"
+                value = "COVEREDRATIO"
+                minimum = "0.7".toBigDecimal()
+            }
+        }
+
+        rule {
+            element = "CLASS"
+            includes = listOf("org.gradle.*")
+            limit {
+                counter = "LINE"
+                value = "TOTALCOUNT"
+                maximum = "0.8".toBigDecimal()
+            }
+        }
+    }
+    classDirectories.setFrom(
+        sourceSets.main.get().output.asFileTree.matching {
+            exclude(exclusions)
+        }
+    )
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    finalizedBy(tasks.jacocoTestCoverageVerification)
+}
+
+tasks.jacocoTestCoverageVerification {
+    dependsOn(tasks.jacocoTestReport)
 }

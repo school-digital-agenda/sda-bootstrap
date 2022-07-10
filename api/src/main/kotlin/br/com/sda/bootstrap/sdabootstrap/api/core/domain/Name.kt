@@ -5,5 +5,5 @@ data class Name(
     val middleName: String? = null,
     val lastName: String
 ) {
-    companion object {}
+    companion object
 }

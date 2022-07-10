@@ -5,7 +5,7 @@ import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Name
 fun Name.Companion.splitFromString(source: String): Name =
     source.split(" ")
         .let { toTriple(it) }
-        .let { Name (it.first, it.second, it.third) }
+        .let { Name(it.first, it.second, it.third) }
 
 private fun toTriple(source: List<String>): Triple<String, String, String> {
     val mutableList = source.toMutableList()
@@ -21,4 +21,3 @@ private fun toTriple(source: List<String>): Triple<String, String, String> {
         if (source.size > 1) { source.last() } else { "" }
     )
 }
-

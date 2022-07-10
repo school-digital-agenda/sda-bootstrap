@@ -6,5 +6,4 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
 @Tag("Unit")
-abstract class UnitTest {
-}
+abstract class UnitTest

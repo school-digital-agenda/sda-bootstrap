@@ -3,7 +3,7 @@ package br.com.sda.bootstrap.sdabootstrap.api.app.adapters.`in`.webflux.resource
 import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Stage
 import java.math.BigDecimal
 
-data class GetCourseResourceResponse (
+data class GetCourseResourceResponse(
     val id: String,
     val name: String,
     val description: String,

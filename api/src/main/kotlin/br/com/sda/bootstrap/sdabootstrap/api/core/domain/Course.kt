@@ -10,5 +10,5 @@ data class Course(
     val stage: Stage,
     val tuitionFee: BigDecimal
 ) {
-    companion object {}
+    companion object
 }

@@ -9,5 +9,5 @@ import org.springframework.boot.runApplication
 class SdaBootstrapApplication
 
 fun main(args: Array<String>) {
-	runApplication<SdaBootstrapApplication>(*args)
+    runApplication<SdaBootstrapApplication>(*args)
 }

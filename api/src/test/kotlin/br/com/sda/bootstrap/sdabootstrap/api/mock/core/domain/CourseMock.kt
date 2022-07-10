@@ -7,7 +7,7 @@ import reactor.core.publisher.SynchronousSink
 import java.math.BigDecimal
 import java.util.UUID
 
-private val faker = faker {  }
+private val faker = faker { }
 
 fun Course.Companion.buildMock(): Course =
     Course(

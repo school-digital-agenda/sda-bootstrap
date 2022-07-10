@@ -7,7 +7,7 @@ import buildMock
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-class CoursesResourceTest(): IntegrationTest() {
+class CoursesResourceTest : IntegrationTest() {
     companion object {
         private const val COURSES_URI = "/courses/"
         private const val COURSES_ENROLL_URI = "/courses/enroll"
@@ -18,10 +18,11 @@ class CoursesResourceTest(): IntegrationTest() {
         @Test
         fun getCoursesByStages() {
             webTestClient.get()
-                .uri { uriBuilder -> uriBuilder
-                    .path(COURSES_URI)
-                    .queryParam("stages", Stage.BERCARIO.name)
-                    .build()
+                .uri { uriBuilder ->
+                    uriBuilder
+                        .path(COURSES_URI)
+                        .queryParam("stages", Stage.BERCARIO.name)
+                        .build()
                 }
                 .exchange()
                 .expectStatus().is5xxServerError
@@ -35,9 +36,10 @@ class CoursesResourceTest(): IntegrationTest() {
             val body = PostCourseEnrollRequest.buildMock()
 
             webTestClient.post()
-                .uri { uriBuilder -> uriBuilder
-                    .path(COURSES_ENROLL_URI)
-                    .build()
+                .uri { uriBuilder ->
+                    uriBuilder
+                        .path(COURSES_ENROLL_URI)
+                        .build()
                 }
                 .bodyValue(body)
                 .exchange()

@@ -2,6 +2,6 @@ package br.com.sda.bootstrap.sdabootstrap.api.app.adapters.`in`.webflux.resource
 
 import java.util.UUID
 
-data class PostCourseEnrollResponse (
+data class PostCourseEnrollResponse(
     val id: UUID
 )

@@ -17,7 +17,7 @@ import reactor.kotlin.test.expectError
 import reactor.test.StepVerifier
 import java.time.LocalDate
 
-internal class EnrollInElegibleCourseUseCaseTest: UnitTest() {
+internal class EnrollInElegibleCourseUseCaseTest : UnitTest() {
 
     @MockK
     private lateinit var courseFetcher: CourseFetcher
@@ -62,7 +62,7 @@ internal class EnrollInElegibleCourseUseCaseTest: UnitTest() {
             .returns(Mono.just(course))
 
         StepVerifier.create(enrollInElegibleCourseUseCase.enroll(requirement))
-            .then { verify (exactly = 0) { enrollmentAnalyser.sendRequirementForAnalysis(any()) }}
+            .then { verify(exactly = 0) { enrollmentAnalyser.sendRequirementForAnalysis(any()) } }
             .expectError(EnrollmentNotElegibleException::class)
             .verify()
     }
