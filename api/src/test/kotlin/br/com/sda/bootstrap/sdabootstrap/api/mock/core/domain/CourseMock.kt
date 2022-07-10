@@ -5,12 +5,13 @@ import io.github.serpro69.kfaker.faker
 import reactor.core.publisher.Flux
 import reactor.core.publisher.SynchronousSink
 import java.math.BigDecimal
+import java.util.UUID
 
 private val faker = faker {  }
 
 fun Course.Companion.buildMock(): Course =
     Course(
-        id = br.com.sda.bootstrap.sdabootstrap.api.mock.fixtureUuid(),
+        id = UUID.randomUUID(),
         name = faker.rickAndMorty.locations(),
         description = faker.rickAndMorty.quotes(),
         stage = br.com.sda.bootstrap.sdabootstrap.api.mock.fixtureStage(),

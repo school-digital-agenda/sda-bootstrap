@@ -4,6 +4,7 @@ import br.com.sda.bootstrap.sdabootstrap.api.app.adapters.`in`.webflux.mapper.to
 import br.com.sda.bootstrap.sdabootstrap.api.app.adapters.`in`.webflux.mapper.toRequirement
 import br.com.sda.bootstrap.sdabootstrap.api.app.adapters.`in`.webflux.resources.GetCourseResourceResponse
 import br.com.sda.bootstrap.sdabootstrap.api.app.adapters.`in`.webflux.resources.PostCourseEnrollRequest
+import br.com.sda.bootstrap.sdabootstrap.api.app.adapters.`in`.webflux.resources.PostCourseEnrollResponse
 import br.com.sda.bootstrap.sdabootstrap.api.app.adapters.`in`.webflux.springdoc.CoursesResourceSpringdoc
 import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Stage
 import br.com.sda.bootstrap.sdabootstrap.api.core.port.`in`.CourseEnroller
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 
 @RestController
 @RequestMapping("/courses")
@@ -33,7 +35,7 @@ class CoursesResource(
 
     @PostMapping("/enroll")
     @ResponseStatus(HttpStatus.CREATED)
-    override fun enroll(request: PostCourseEnrollRequest) =
+    override fun enroll(request: PostCourseEnrollRequest): Mono<PostCourseEnrollResponse> =
             courseEnroller.enroll(request.toRequirement())
-
+                .flatMap { Mono.just(PostCourseEnrollResponse(it)) }
 }
