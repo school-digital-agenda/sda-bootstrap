@@ -16,7 +16,7 @@ class CoursePersistenceAdapter(
     private val courseRepository: CourseRepository
 ): CoursesFinder, CourseFetcher {
     override fun findCoursesByStage(stages: List<Stage>): Flux<Course> =
-        courseRepository.findAllInStages(stages)
+        courseRepository.findByStageIn(stages)
             .map { it.toCourse() }
 
     override fun fetchCourseById(id: UUID): Mono<Course> =

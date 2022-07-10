@@ -24,6 +24,8 @@ val springmockkVersion = "3.1.1"
 val kotlinFakerVersion = "1.11.0"
 val fixtureVersion = "1.2.0"
 val springDocVersion = "1.6.9"
+val h2Version = "2.1.214"
+val r2dbcH2Version = "1.0.0.RC1"
 
 repositories {
     mavenCentral()
@@ -59,6 +61,8 @@ dependencies {
     testImplementation("io.github.serpro69:kotlin-faker:$kotlinFakerVersion")
     testImplementation("com.appmattus.fixture:fixture:$fixtureVersion")
     testImplementation("com.appmattus.fixture:fixture-generex:$fixtureVersion")
+    testImplementation("com.h2database:h2:$h2Version")
+    testImplementation("io.r2dbc:r2dbc-h2:$r2dbcH2Version")
 }
 
 dependencyManagement {

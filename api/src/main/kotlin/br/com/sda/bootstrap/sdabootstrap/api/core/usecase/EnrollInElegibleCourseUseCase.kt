@@ -19,11 +19,13 @@ class EnrollInElegibleCourseUseCase(
 ): CourseEnroller {
     override fun enroll(requirement: Requirement): Mono<UUID> =
         courseFetcher.fetchCourseById(requirement.course)
+            .log()
             .flatMap { entity ->
                 Mono.just(EnrollmentAggregation(UUID.randomUUID(), requirement, entity)
                     .also { checkEligibility(it) }
                     .also { enrollmentAnalyser.sendRequirementForAnalysis(it) }
                     .id)
+                    .log()
             }
 
     private fun checkEligibility(enrollmentAggregation: EnrollmentAggregation) {

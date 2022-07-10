@@ -5,9 +5,11 @@ spring:
   jackson:
     default-property-inclusion: non_null
   r2dbc:
-    url: r2dbc:postgresql://postgres@localhost:5432/sda-bootstrap
+    url: r2dbc:postgresql://localhost:5432/sda-bootstrap
     username: admin
     password: root
+    properties:
+      schema: bootstrap
 
 server:
   port: 8080

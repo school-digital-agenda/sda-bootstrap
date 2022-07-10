@@ -2,7 +2,6 @@ package br.com.sda.bootstrap.sdabootstrap.api.core.usecase
 
 import br.com.sda.bootstrap.sdabootstrap.api.UnitTest
 import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Course
-import br.com.sda.bootstrap.sdabootstrap.api.core.domain.EnrollmentAggregation
 import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Requirement
 import br.com.sda.bootstrap.sdabootstrap.api.core.exception.EnrollmentNotElegibleException
 import br.com.sda.bootstrap.sdabootstrap.api.core.port.out.CourseFetcher
@@ -11,13 +10,12 @@ import br.com.sda.bootstrap.sdabootstrap.api.mock.core.domain.buildMock
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
-import io.mockk.justRun
 import io.mockk.verify
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import reactor.core.publisher.Mono
+import reactor.kotlin.test.expectError
+import reactor.test.StepVerifier
 import java.time.LocalDate
-import java.util.UUID
 
 internal class EnrollInElegibleCourseUseCaseTest: UnitTest() {
 
@@ -38,16 +36,17 @@ internal class EnrollInElegibleCourseUseCaseTest: UnitTest() {
                 course = course.id!!,
                 birthDate = LocalDate.now().minusYears(course.stage.age.first.toLong())
             )
-        val aggregate = EnrollmentAggregation(UUID.randomUUID(), requirement, course!!)
 
         every { courseFetcher.fetchCourseById(course.id!!) }
             .returns(Mono.just(course))
 
-        justRun { enrollmentAnalyser.sendRequirementForAnalysis(aggregate) }
+        every { enrollmentAnalyser.sendRequirementForAnalysis(any()) }
+            .returns(Mono.empty())
 
-        enrollInElegibleCourseUseCase.enroll(requirement)
-
-        verify { enrollmentAnalyser.sendRequirementForAnalysis(aggregate) }
+        StepVerifier.create(enrollInElegibleCourseUseCase.enroll(requirement))
+            .expectNextCount(1)
+            .then { verify { enrollmentAnalyser.sendRequirementForAnalysis(any()) } }
+            .verifyComplete()
     }
 
     @Test
@@ -55,18 +54,16 @@ internal class EnrollInElegibleCourseUseCaseTest: UnitTest() {
         val course = Course.buildMock()
         val requirement = Requirement.buildMock()
             .copy(
-                course = course.id ?: UUID.randomUUID(),
+                course = course.id!!,
                 birthDate = LocalDate.now()
             )
 
         every { courseFetcher.fetchCourseById(course.id!!) }
             .returns(Mono.just(course))
 
-        assertThrows<EnrollmentNotElegibleException> {
-            enrollInElegibleCourseUseCase.enroll(requirement)
-        }
-
-        verify (exactly = 0) { enrollmentAnalyser.sendRequirementForAnalysis(any()) }
+        StepVerifier.create(enrollInElegibleCourseUseCase.enroll(requirement))
+            .then { verify (exactly = 0) { enrollmentAnalyser.sendRequirementForAnalysis(any()) }}
+            .expectError(EnrollmentNotElegibleException::class)
+            .verify()
     }
-
 }
