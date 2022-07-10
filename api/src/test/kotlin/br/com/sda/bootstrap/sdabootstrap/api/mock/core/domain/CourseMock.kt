@@ -5,21 +5,22 @@ import io.github.serpro69.kfaker.faker
 import reactor.core.publisher.Flux
 import reactor.core.publisher.SynchronousSink
 import java.math.BigDecimal
+import java.util.UUID
 
-private val faker = faker {  }
+private val faker = faker { }
 
-fun Course.Companion.buildCourseMock(): Course =
+fun Course.Companion.buildMock(): Course =
     Course(
-        id = fixtureUuid(),
+        id = UUID.randomUUID(),
         name = faker.rickAndMorty.locations(),
         description = faker.rickAndMorty.quotes(),
-        stage = fixtureStage(),
-        tuitionFee = BigDecimal(fixtureMoney())
+        stage = br.com.sda.bootstrap.sdabootstrap.api.mock.fixtureStage(),
+        tuitionFee = BigDecimal(br.com.sda.bootstrap.sdabootstrap.api.mock.fixtureMoney())
     )
 
 fun Course.Companion.generateCourse(): Flux<Course> =
     Flux.generate { synchronousSink: SynchronousSink<Course> ->
         synchronousSink.next(
-            Course.buildCourseMock()
+            Course.buildMock()
         )
     }

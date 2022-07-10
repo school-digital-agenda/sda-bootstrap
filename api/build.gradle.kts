@@ -1,10 +1,15 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.7.1"
-    id("io.spring.dependency-management") version "1.0.12.RELEASE"
-    kotlin("jvm") version "1.7.10"
-    kotlin("plugin.spring") version "1.7.10"
+    kotlin("jvm")
+    kotlin("plugin.spring")
+    kotlin("plugin.noarg")
+    kotlin("plugin.jpa")
+    id("io.spring.dependency-management")
+    id("org.springframework.boot")
+    id("io.gitlab.arturbosch.detekt")
+    id("org.jlleitschuh.gradle.ktlint")
+    id("jacoco")
 }
 
 group = "br.com.sda.bootstrap.api"
@@ -19,9 +24,24 @@ val serializationCoreVersion = "1.3.3"
 val springmockkVersion = "3.1.1"
 val kotlinFakerVersion = "1.11.0"
 val fixtureVersion = "1.2.0"
+val springDocVersion = "1.6.9"
+val h2Version = "2.1.214"
+val r2dbcH2Version = "1.0.0.RC1"
 
 repositories {
     mavenCentral()
+}
+
+springBoot {
+    buildInfo()
+}
+
+tasks.bootJar {
+    enabled = true
+}
+
+tasks.jar {
+    enabled = false
 }
 
 dependencies {
@@ -36,18 +56,26 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationCoreVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 
-//    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+    runtimeOnly("org.postgresql:r2dbc-postgresql")
+    runtimeOnly("org.postgresql:postgresql")
+
+    implementation("org.springdoc:springdoc-openapi-webflux-ui:$springDocVersion")
+    implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
+
+    implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
 //    implementation("org.springframework.cloud:spring-cloud-bus")
-//    runtimeOnly("org.postgresql:postgresql")
-//    runtimeOnly("org.postgresql:r2dbc-postgresql")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.cloud:spring-cloud-starter-contract-stub-runner")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("com.ninja-squad:springmockk:$springmockkVersion")
     testImplementation("io.github.serpro69:kotlin-faker:$kotlinFakerVersion")
     testImplementation("com.appmattus.fixture:fixture:$fixtureVersion")
     testImplementation("com.appmattus.fixture:fixture-generex:$fixtureVersion")
+    testImplementation("com.h2database:h2:$h2Version")
+    testImplementation("io.r2dbc:r2dbc-h2:$r2dbcH2Version")
 }
 
 dependencyManagement {
@@ -65,4 +93,86 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    reports {
+        html.required.set(true)
+        xml.required.set(false)
+        txt.required.set(false)
+        sarif.required.set(false)
+    }
+}
+
+/************************
+ * JaCoCo Configuration *
+ ************************/
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+val exclusions = listOf(
+    "**/config/**",
+    "**/exception/**",
+    "**/port/**",
+    "**/webflux/resources/**",
+    "**/advice/**",
+    "**/springdoc/**",
+    "**/persistence/entity/**",
+    "**/persistence/repository/**"
+)
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+        csv.required.set(false)
+        html.required.set(true)
+    }
+}
+
+tasks.test {
+    configure<JacocoTaskExtension> {
+        excludes = emptyList()
+    }
+}
+
+tasks.jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = "BUNDLE"
+            limit {
+                counter = "INSTRUCTION"
+                value = "COVEREDRATIO"
+                minimum = "0.7".toBigDecimal()
+            }
+        }
+
+        rule {
+            element = "CLASS"
+            includes = listOf("org.gradle.*")
+            limit {
+                counter = "LINE"
+                value = "TOTALCOUNT"
+                maximum = "0.8".toBigDecimal()
+            }
+        }
+    }
+    classDirectories.setFrom(
+        sourceSets.main.get().output.asFileTree.matching {
+            exclude(exclusions)
+        }
+    )
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    finalizedBy(tasks.jacocoTestCoverageVerification)
+}
+
+tasks.jacocoTestCoverageVerification {
+    dependsOn(tasks.jacocoTestReport)
 }
