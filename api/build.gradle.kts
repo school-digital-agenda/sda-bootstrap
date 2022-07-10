@@ -104,23 +104,29 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
     }
 }
 
-tasks.test {
-    finalizedBy(tasks.jacocoTestReport)
-}
-
-tasks.jacocoTestReport {
-    dependsOn(tasks.test)
-}
-
+/************************
+ * JaCoCo Configuration *
+ ************************/
 jacoco {
     toolVersion = "0.8.7"
 }
 
+val exclusions = listOf(
+    "**/config/**",
+    "**/exception/**",
+    "**/port/**",
+    "**/webflux/resources/**",
+    "**/advice/**",
+    "**/springdoc/**",
+    "**/persistence/entity/**",
+    "**/persistence/repository/**"
+)
+
 tasks.jacocoTestReport {
     reports {
-        xml.required.set(false)
+        xml.required.set(true)
         csv.required.set(false)
-        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
+        html.required.set(true)
     }
 }
 
@@ -133,16 +139,17 @@ tasks.test {
 tasks.jacocoTestCoverageVerification {
     violationRules {
         rule {
+            element = "BUNDLE"
             limit {
-                minimum = "0.8".toBigDecimal()
+                counter = "INSTRUCTION"
+                value = "COVEREDRATIO"
+                minimum = "0.7".toBigDecimal()
             }
         }
 
         rule {
-            isEnabled = false
             element = "CLASS"
             includes = listOf("org.gradle.*")
-
             limit {
                 counter = "LINE"
                 value = "TOTALCOUNT"
@@ -150,4 +157,22 @@ tasks.jacocoTestCoverageVerification {
             }
         }
     }
+    classDirectories.setFrom(
+        sourceSets.main.get().output.asFileTree.matching {
+            exclude(exclusions)
+        }
+    )
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    finalizedBy(tasks.jacocoTestCoverageVerification)
+}
+
+tasks.jacocoTestCoverageVerification {
+    dependsOn(tasks.jacocoTestReport)
 }
