@@ -15,7 +15,9 @@ import io.mockk.justRun
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import reactor.core.publisher.Mono
 import java.time.LocalDate
+import java.util.UUID
 
 internal class EnrollInElegibleCourseUseCaseTest: UnitTest() {
 
@@ -33,13 +35,13 @@ internal class EnrollInElegibleCourseUseCaseTest: UnitTest() {
         val course = Course.buildMock()
         val requirement = Requirement.buildMock()
             .copy(
-                course = course.id,
+                course = course.id!!,
                 birthDate = LocalDate.now().minusYears(course.stage.age.first.toLong())
             )
-        val aggregate = EnrollmentAggregation(requirement, course)
+        val aggregate = EnrollmentAggregation(UUID.randomUUID(), requirement, course!!)
 
-        every { courseFetcher.fetchCourseById(course.id) }
-            .returns(course)
+        every { courseFetcher.fetchCourseById(course.id!!) }
+            .returns(Mono.just(course))
 
         justRun { enrollmentAnalyser.sendRequirementForAnalysis(aggregate) }
 
@@ -53,12 +55,12 @@ internal class EnrollInElegibleCourseUseCaseTest: UnitTest() {
         val course = Course.buildMock()
         val requirement = Requirement.buildMock()
             .copy(
-                course = course.id,
+                course = course.id ?: UUID.randomUUID(),
                 birthDate = LocalDate.now()
             )
 
-        every { courseFetcher.fetchCourseById(course.id) }
-            .returns(course)
+        every { courseFetcher.fetchCourseById(course.id!!) }
+            .returns(Mono.just(course))
 
         assertThrows<EnrollmentNotElegibleException> {
             enrollInElegibleCourseUseCase.enroll(requirement)

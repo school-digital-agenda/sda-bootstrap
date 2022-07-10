@@ -5,7 +5,7 @@ import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Course
 
 fun Course.toCourseResourceResponse() =
     GetCourseResourceResponse(
-        id = this.id,
+        id = this.id.toString(),
         name = this.name,
         description = this.description,
         stage = this.stage,
