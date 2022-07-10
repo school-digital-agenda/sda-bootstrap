@@ -16,15 +16,17 @@ import java.util.UUID
 class EnrollInElegibleCourseUseCase(
     private val courseFetcher: CourseFetcher,
     private val enrollmentAnalyser: EnrollmentAnalyzer
-): CourseEnroller {
+) : CourseEnroller {
     override fun enroll(requirement: Requirement): Mono<UUID> =
         courseFetcher.fetchCourseById(requirement.course)
             .log()
             .flatMap { entity ->
-                Mono.just(EnrollmentAggregation(UUID.randomUUID(), requirement, entity)
-                    .also { checkEligibility(it) }
-                    .also { enrollmentAnalyser.sendRequirementForAnalysis(it) }
-                    .id)
+                Mono.just(
+                    EnrollmentAggregation(UUID.randomUUID(), requirement, entity)
+                        .also { checkEligibility(it) }
+                        .also { enrollmentAnalyser.sendRequirementForAnalysis(it) }
+                        .id
+                )
                     .log()
             }
 

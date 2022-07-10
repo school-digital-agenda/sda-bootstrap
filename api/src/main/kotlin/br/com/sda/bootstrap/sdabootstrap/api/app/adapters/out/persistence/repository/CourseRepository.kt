@@ -8,6 +8,6 @@ import reactor.core.publisher.Flux
 import java.util.UUID
 
 @Repository
-interface CourseRepository: R2dbcRepository<CourseEntity, UUID> {
+interface CourseRepository : R2dbcRepository<CourseEntity, UUID> {
     fun findByStageIn(stages: List<Stage>): Flux<CourseEntity>
 }

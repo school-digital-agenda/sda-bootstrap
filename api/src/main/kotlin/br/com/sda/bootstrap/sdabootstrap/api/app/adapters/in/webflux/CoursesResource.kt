@@ -24,7 +24,7 @@ import reactor.core.publisher.Mono
 class CoursesResource(
     private val courseEnroller: CourseEnroller,
     private val coursesByStageFinder: CoursesByStageFinder
-): CoursesResourceSpringdoc {
+) : CoursesResourceSpringdoc {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     override fun getCoursesByStages(
@@ -36,6 +36,6 @@ class CoursesResource(
     @PostMapping("/enroll")
     @ResponseStatus(HttpStatus.CREATED)
     override fun enroll(request: PostCourseEnrollRequest): Mono<PostCourseEnrollResponse> =
-            courseEnroller.enroll(request.toRequirement())
-                .flatMap { Mono.just(PostCourseEnrollResponse(it)) }
+        courseEnroller.enroll(request.toRequirement())
+            .flatMap { Mono.just(PostCourseEnrollResponse(it)) }
 }

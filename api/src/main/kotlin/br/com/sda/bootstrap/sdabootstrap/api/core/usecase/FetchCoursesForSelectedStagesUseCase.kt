@@ -12,7 +12,7 @@ import java.util.logging.Level
 @Service
 class FetchCoursesForSelectedStagesUseCase(
     private val coursesFinder: CoursesFinder
-): CoursesByStageFinder {
+) : CoursesByStageFinder {
     companion object {
         private const val LOGGER_CATEGORY_FETCH_COURSES_BY_STAGE = "FetchCoursesForSelectedStages.fetchCoursesByStage"
     }

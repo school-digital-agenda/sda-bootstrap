@@ -10,5 +10,5 @@ data class Requirement(
     val document: String,
     val course: UUID
 ) {
-    companion object {}
+    companion object
 }

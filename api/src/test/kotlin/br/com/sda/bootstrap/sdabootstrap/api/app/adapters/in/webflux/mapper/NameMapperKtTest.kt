@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
-class NameMapperKtTest: UnitTest() {
+class NameMapperKtTest : UnitTest() {
 
-    private val faker = faker {  }
+    private val faker = faker { }
 
     @Test
     fun `Should split 3 part name to first, middle and last name`() {
@@ -41,5 +41,4 @@ class NameMapperKtTest: UnitTest() {
         assertTrue(result.middleName.isNullOrBlank())
         assertTrue(result.lastName.isNullOrBlank())
     }
-
 }

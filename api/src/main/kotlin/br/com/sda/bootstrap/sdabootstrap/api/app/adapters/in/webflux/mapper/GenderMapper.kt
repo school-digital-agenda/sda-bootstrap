@@ -4,7 +4,7 @@ import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Gender
 
 fun genderFromString(source: String?) =
     source
-        ?.takeIf { it.isNotBlank()}
+        ?.takeIf { it.isNotBlank() }
         ?.let {
             try {
                 Gender.valueOf(it)

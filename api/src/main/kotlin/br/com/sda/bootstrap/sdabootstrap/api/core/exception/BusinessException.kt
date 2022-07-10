@@ -1,6 +1,6 @@
 package br.com.sda.bootstrap.sdabootstrap.api.core.exception
 
-abstract class BusinessException: RuntimeException {
+abstract class BusinessException : RuntimeException {
     constructor() : super()
     constructor(message: String?) : super(message)
     constructor(message: String?, cause: Throwable?) : super(message, cause)
