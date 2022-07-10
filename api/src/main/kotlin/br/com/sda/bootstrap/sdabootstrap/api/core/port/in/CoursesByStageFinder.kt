@@ -5,5 +5,5 @@ import br.com.sda.bootstrap.sdabootstrap.api.core.domain.Stage
 import reactor.core.publisher.Flux
 
 interface CoursesByStageFinder {
-    fun fetchCoursesByStage(filter: List<Stage>): Flux<Course>
+    fun fetchCoursesByStage(stages: List<Stage>): Flux<Course>
 }
