@@ -65,10 +65,12 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
 
     implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
-//    implementation("org.springframework.cloud:spring-cloud-bus")
+    implementation("org.springframework.cloud:spring-cloud-stream")
+    implementation("org.springframework.cloud:spring-cloud-stream-binder-rabbit")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.cloud:spring-cloud-starter-contract-stub-runner")
+    testImplementation("org.springframework.cloud:spring-cloud-stream-test-support")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("com.ninja-squad:springmockk:$springmockkVersion")
     testImplementation("io.github.serpro69:kotlin-faker:$kotlinFakerVersion")
@@ -119,7 +121,8 @@ val exclusions = listOf(
     "**/advice/**",
     "**/springdoc/**",
     "**/persistence/entity/**",
-    "**/persistence/repository/**"
+    "**/persistence/repository/**",
+    "**/SdaBootstrapApplication.kt"
 )
 
 tasks.jacocoTestReport {
