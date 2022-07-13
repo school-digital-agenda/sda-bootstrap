@@ -91,6 +91,27 @@ Com este endereço, basta ir para a página principal do PGAdmin, clicar em
 pelo comando anterior:
 ![Configuração PGAdmin][4]
 
+### Db Migration
+A criação da estrutura do banco de dados é feita pelo Flyway Migrate. Para executar o migration dos scripts basta executar o comando:
+``` bash
+$ DB_URL=jdbc:postgresql://localhost:5432/postgres DB_USER=admin DB_PASSWORD=root ./gradlew flywayMigrate
+```
+
+## Executando a aplicação
+``` bash
+# Executar módulo API
+$ ./gradlew api:bootRun
+```
+
+## Imagem docker
+``` bash
+### Gerar imagem
+$ docker build -t sda-bootstrap .
+
+### Executar
+$ docker run -p 8080:8080 -it sda-bootstrap
+```
+
 [1]: https://sdkman.io/install
 [2]: https://sdkman.io/usage
 [3]: ./config/assets/images/pg-ipaddress.png

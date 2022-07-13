@@ -40,3 +40,7 @@ subprojects {
         }
     }
 }
+
+dependencies {
+    implementation("org.postgresql:postgresql")
+}
