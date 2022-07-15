@@ -18,7 +18,7 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 
 val springCloudVersion = "2021.0.3"
 val datetimeVersion = "0.4.0"
-val coroutinesVersion = "1.6.3"
+val coroutinesVersion = "1.6.4"
 val uuidVersion = "0.0.15"
 val serializationCoreVersion = "1.3.3"
 val springmockkVersion = "3.1.1"
