@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-alpine
+FROM amazoncorretto:17-alpine
 RUN mkdir /opt/app
-COPY build/libs/*.jar /opt/app/app.jar
+COPY *.jar /opt/app/app.jar
 CMD ["java", "-jar", "/opt/app/app.jar"]

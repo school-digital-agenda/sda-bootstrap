@@ -9,11 +9,13 @@ plugins {
     id("org.springframework.boot")
     id("io.gitlab.arturbosch.detekt")
     id("org.jlleitschuh.gradle.ktlint")
+    id("com.gorylenko.gradle-git-properties")
     id("jacoco")
+    id("com.palantir.docker")
 }
 
-group = "br.com.sda.bootstrap.api"
-version = "0.0.1-SNAPSHOT"
+group = "${rootProject.group}.api"
+version = rootProject.version
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 val springCloudVersion = "2021.0.3"
@@ -57,6 +59,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
     runtimeOnly("org.postgresql:r2dbc-postgresql")
     runtimeOnly("org.postgresql:postgresql")
@@ -178,4 +181,9 @@ tasks.jacocoTestReport {
 
 tasks.jacocoTestCoverageVerification {
     dependsOn(tasks.jacocoTestReport)
+}
+
+docker {
+    name = "${project.name}:${project.version}"
+    files("${project.buildDir}/libs/api-0.0.1-SNAPSHOT.jar")
 }

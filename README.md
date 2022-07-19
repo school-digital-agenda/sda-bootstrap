@@ -106,7 +106,7 @@ $ ./gradlew api:bootRun
 ## Imagem docker
 ``` bash
 ### Gerar imagem
-$ docker build -t sda-bootstrap .
+$ ./gradlew docker
 
 ### Executar
 $ docker run -p 8080:8080 -it sda-bootstrap
