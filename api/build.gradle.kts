@@ -187,6 +187,6 @@ val ecrRegistry = System.getenv("ECR_REGISTRY") ?: project.group
 val ecrRepository = System.getenv("ECR_REPOSITORY") ?: "sda"
 
 docker {
-    name = "$ecrRegistry/$ecrRepository/${rootProject.name}-${project.name}:${project.version}"
+    name = "$ecrRegistry/$ecrRepository:${rootProject.name}-${project.name}-${project.version}"
     files("${project.buildDir}/libs/api-0.0.1-SNAPSHOT.jar")
 }
