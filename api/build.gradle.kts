@@ -184,9 +184,9 @@ tasks.jacocoTestCoverageVerification {
 }
 
 val ecrRegistry = System.getenv("ECR_REGISTRY") ?: project.group
-val ecrRepository = System.getenv("ECR_REPOSITORY") ?: "sda"
+val ecrRepository = System.getenv("ECR_REPOSITORY") ?: "${rootProject.name}-${project.name}"
 
 docker {
-    name = "$ecrRegistry/$ecrRepository:${rootProject.name}-${project.name}-${project.version}"
+    name = "$ecrRegistry/$ecrRepository:${project.version}"
     files("${project.buildDir}/libs/api-0.0.1-SNAPSHOT.jar")
 }
