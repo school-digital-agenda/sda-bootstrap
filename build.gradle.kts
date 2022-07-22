@@ -11,7 +11,7 @@ plugins {
     id("org.springframework.boot") version "2.7.1"
     id("io.gitlab.arturbosch.detekt") version "1.20.0"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
-    id("org.flywaydb.flyway") version "8.5.13"
+    id("org.flywaydb.flyway") version "9.0.1"
     id("jacoco")
 }
 
