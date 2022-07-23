@@ -188,5 +188,5 @@ val ecrRepository = System.getenv("ECR_REPOSITORY") ?: "${rootProject.name}-${pr
 
 docker {
     name = "$ecrRegistry/$ecrRepository:${project.version}"
-    files("${project.buildDir}/libs/api-0.0.1-SNAPSHOT.jar")
+    files("${project.buildDir}/libs/${project.name}-${project.version}.jar")
 }
