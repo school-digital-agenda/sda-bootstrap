@@ -16,7 +16,7 @@ group = "br.com.sda.bootstrap.api"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
-val springCloudVersion = "2021.0.3"
+val springCloudVersion = "2022.0.1"
 val datetimeVersion = "0.4.0"
 val coroutinesVersion = "1.6.4"
 val uuidVersion = "0.0.15"
