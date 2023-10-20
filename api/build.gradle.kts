@@ -26,7 +26,7 @@ val kotlinFakerVersion = "1.11.0"
 val fixtureVersion = "1.2.0"
 val springDocVersion = "1.6.9"
 val h2Version = "2.1.214"
-val r2dbcH2Version = "1.0.0.RC1"
+val r2dbcH2Version = "1.0.0.RELEASE"
 
 repositories {
     mavenCentral()
